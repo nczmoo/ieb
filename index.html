@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="css.css">
+    <title>Incremental Engine Builder</title>
+  </head>
+    <body>
+		<div class='text-center'>
+			Audio On? <input id='audioOn' type='checkbox'>
+		</div>
+		<div id="loopMenu" class="windows d-none">
+			<div class="text-center mb-3 mt-3">
+				<button id="" class="back btn btn-lg btn-danger p-3">back</button>				
+			</div>
+			<div class="text-center mb-3" style="clear:left;">
+				Since you have <span class="loops"></span> loop(s), you can trade a loop to keep a card from your tableau.
+			</div>
+			<div id="whichCardsToKeep" class='text-center' style="clear:left;"></div>
+			
+		</div><div id='game' class='windows'>
+			<div id='stats' class='row mb-4 d-none mt-3'>
+				<div id='winsLabel' class='col text-center'>
+					<div>
+						<img src='img2/wins.png' height='32' width='32'>
+					</div><div>
+						Wins: <span id='wins'></span>
+						(<span id='winsCent'></span>%)
+					</div>
+					
+				</div><div id='loopsLabel' class='col text-center'>
+					<div>
+						<img src='img2/loops.png' height='32' width='32'>
+					</div><div>
+						Loops: <span class='loops'></span>
+					</div>
+				</div><div id='lossesLabel' class='col text-center'>
+					<div>
+						<img src='img2/losses.png' height='32' width='32'>
+					</div><div>
+						Losses: <span id='losses'></span>
+						(<span id='lossesCent'></span>%)
+					</div>
+				</div>
+			</div>
+
+			<div id='' class='d-none everythingElse'>
+				<div id='tableauDestroyed' class='text-center fw-bold d-none'>
+				<div>
+					<img src='img2/destroyed.png' height='32' width='32'>
+				</div><div>
+					Destroyed Cards: 
+					<span id='destroyed'></span>
+					<span 
+					data-text="Every time you convert and don't have the resources, it destroys the card! But then you can claim new ones!"
+					class="poop"
+					>[ ? ]</span>
+				</div>
+					
+				</div>
+				
+				<div id='cards' class='mb-3'></div>
+				<div class='text-center tableau d-none'>
+					<img src='img2/tableauLimit.png' height='32' width='32'>
+				</div>				
+				<div id='tableauLabel' class='text-center fw-bold d-none tableau'>		
+					Tableau 
+					<span id='tableauSize'></span>/<span id='tableauLimit'></span>
+					<span 
+					data-text="This is your tableau! All your cards you've bought are here. This icon represents the max number of cards you can have. See what kind of combos you can make!"
+					class="poop"
+					>[ ? ]</span>
+				</div>
+			</div>
+			<div class='mt-3 mb-4 text-center'>
+					<button id='refresh' class='btn btn-lg btn-outline-dark p-3 everythingElse'>
+						<div>
+							<img id='refreshImg' src='img2/reloads.png' height='32' width='32'>						
+						</div><div>
+							(<span id='reloads'></span>)
+						</div>
+					</button>
+					<span id="" style="width:66px;display:inline-block; text-align:center;">
+						<div class="text-center" >
+							<img id='' src='img2/available.png' height='32' width='32'>
+							
+						</div><div class="'text-center">
+							<span id='available'></span>/<span id='winAt'></span>
+						</div>
+					</span>
+					<button id='clickButton' class='btn btn-lg btn-outline-dark  p-3 	me-3 d-none' disabled >
+						<div>
+							<img id='clickButtonImg' src='img2/clicks.png' height='32' width='32'>
+							
+						</div><div>
+							<span class='clicks'></span>
+						</div>
+					</button>
+
+					<button id='wipe' class='text-center btn  btn-lg btn-outline-dark p-3   d-none tableau'>
+						<div>
+							<img id='wipeImg' src='img2/wipes.png' height='32' width='32'>
+						</div><div>
+							(<span id='wipes'></span>)
+						</div>
+					</button>
+			</div>
+				
+			<div id='' class='everythingElse'>
+
+				
+				<div class='fw-bold text-center'>
+					Market 
+					<span 
+					data-text="This is the market! Buy cards here." 
+					class="poop"
+					>[ ? ]</span>
+				</div>				
+				<div id='oldMarket' class='text-center mb-5'></div>
+				<div id='market' class='text-center mb-5'></div>
+				<div id='' class='text-center mt-5' style='clear:left;'>
+					<button id='restart' class='btn btn-outline-dark btn-lg ps-4 pe-4 p-3 d-none'>
+					<div>
+						<img id='restartImg' src='img2/restarts.png' height='32' width='32'>
+					</div><div>
+						(<span id='restarts'></span>)
+					</div>
+					</button>
+				</div>
+			</div>
+
+			<div class='' style='clear:left; text-align:center;'>
+				<button id='show-help' class='btn btn-link  show'>[ help ]</button>
+			</div>
+			
+			
+		</div><div id='help' class='d-none windows container'>
+			<div class="row">
+				<div class='text-center'>
+					<button id='' class='back btn btn-link'>[ back ]</button>
+				</div>
+				<div class='text-center'>Hey! <span class='fw-bold'><span class=''>Thanks</span> for trying the game.</span> Here's some help to get you situationed:</div>
+				<div class='fw-bold mt-3'>
+					Winning 
+				</div><div class='ms-3 mb-2 '>
+					You win the game if you get <img src='img2/available.png'> to 20. It's harder than it sounds!
+				</div><div class='ms-3 mb-2 '>
+					Alternatively, you win if you have a card in your tableau with a <span class='fw-bold'>Do:</span> 
+					that says 'win the game' and you fulfill its <span class='fw-bold'>When:</span> condition.
+				</div><div class='fw-bold mt-3'>
+					Playing The Game
+				</div><div class='ms-3 mb-2 '>
+					Every card costs <img src="img2/available.png"> and every card has a <span class='fw-bold'>When:</span> condition that will activate when its in your tableau. When it's activated, it will then do whatever its <span class='fw-bold'>Do:</span> is.
+				</div><div class='ms-3 mb-2  '>
+					If you don't like any of the cards that are available, click <img src="img2/reloads.png"> button to reload the market cards. This costs a <img src="img2/reloads.png"> but if you don't have any, it'll just cost <img src="img2/available.png">.
+				</div><div class='ms-3 mb-2  '>
+					The tricky thing is you don't have much resources. You lose <img src='img2/available.png'> each time you buy a card and every time you click the <img src="img2/reloads.png"> button and don't have any <img src="img2/reloads.png">.
+				</div><div class='ms-3 mb-2  '>
+					And you only have so many cards that can fit in your tableau. (<img src='img2/tableauLimit.png'>) 
+				</div><div class='ms-3 mb-2  '>
+					But the cards you buy give you more of these resources! But only if you fulfill its <span class='fw-bold'>When:</span> condition.
+				</div><div class='ms-3 mb-2  '>
+					Some of the cards do weird stuff! 
+				</div><div class='ms-3 mb-2  '>
+					Instead of giving you resources, some cards convert resources you already have to other resources. Like ( <img src='img2/available.png'> -> 4 <img src='img2/clicks.png'> ) will trade 1 of your <img src='img2/available.png'> for 4 <img src='img2/reloads.png'> but be careful! Don't run out of <img src='img2/available.png'>!
+				</div><div class='ms-3 mb-2  '>
+					Some cards only activate when cards in your tableau are destroyed. When a card tries to convert and it doesn't have any of that source resource, the card is destroyed. 
+				</div><div class='ms-3 mb-2  '>
+					Anyways, try not to worry too much about every little detail. Just have some fun and don't worry if you lose. It's how you play the game!
+				</div><div class='fw-bold mt-3'>
+					Losing
+				</div><div class='ms-3 mb-2  '>
+					If you ever run out of <img src="img2/available.png">, <img src="img2/marketInit.png">, or <img src="img2/tableauLimit.png">, you lose.
+				</div><div class='fw-bold mt-3'>
+					Icons
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/available.png"> - keeps you alive. Used every time you buy a card or click the <img src="img2/reloads.png"> button when you have no <img src="img2/reloads.png">. Start with 10.
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/reloads.png"> - used every time you click the <img src="img2/reloads.png"> button to get new cards in the market. If you run out, you can still refresh the market, but now it costs <img src="img2/available.png">. Start with 5.
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/marketInit.png"> - the number of new cards you'll get when you refresh the market. Start with 3.
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/tableauLimit.png"> - the maximum number of cards you can have in your tableau. Start with 5.
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/wipes.png"> - when you click the <img src="img2/wipes.png"> button, it wipes the tableau so you can start over.				
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/destroyed.png"> - number of destroyed cards. This resource allow you to claim any card in lieu of buying it.
+				</div><div class='ms-3 mb-2  '>
+					The following do not reset at the start of every game:
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/restarts.png"> - when you click the <img src="img2/restarts.png"> button, it allows you to restart the game without losing
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/wins.png"> - how many times you've won
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/losses.png"> - how many times you've lost
+				</div><div class='ms-3 mb-2  '>
+					<img src="img2/loops.png"> - how many times you've managed to create an infinite loop with your tableau
+				</div>
+			</div>	
+		</div>
+		
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src='https://code.jquery.com/jquery-3.6.0.js'></script>
+	<script src='js/UIRefresh.js'></script>
+	<script src='js/UIMarket.js'></script>
+	<script src='js/UI.js'></script>
+	<script src='js/Stock.js'></script>
+	<script src='js/Tableau.js'></script>
+
+	<script src='js/Config.js'></script>
+	
+	<script src='js/Market.js'></script>
+    <script src='js/Game.js'></script>
+    <script src='js/events.js'></script>
+	<script src='js/CardGen.js'></script>
+	<script src='js/CardCheck.js'></script>
+	<script src='js/Card.js'></script>
+	<script src='js/Penalty.js'></script>
+
+    <script src='js/js.js'></script>
+
+
+  </body>
+</html>
